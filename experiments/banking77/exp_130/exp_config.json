@@ -1,0 +1,1 @@
+{"dataset": "banking77", "dev_size": 385, "accuracy_threshold": 0.05, "max_iter": 1, "llm_for_generation": "gpt-5", "llm_for_classify": "/data/T-pro-it-2.0/", "classify_mode": "llm", "bert_name": "/data/projects/bert/bert-base-multilingual-cased"}
