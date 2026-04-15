@@ -1,0 +1,1 @@
+{"domain_info": "It is a classification dataset comprises online banking queries annotated with one of 2 user intents, tariff or not. So consider that you are a banking domain expert. Labels and corresponding class names:\n 0: NOT related with bank tariffs, 1: related with bank tariffs"}
