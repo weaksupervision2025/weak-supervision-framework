@@ -1,7 +1,6 @@
 .env
 *__pycache__*
 *source*
-*iter*
 notebooks/*
 .DS_Store
 snorkel_exp.py
