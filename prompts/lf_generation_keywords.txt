@@ -1,0 +1,84 @@
+{# Context #}
+
+I am solving a text classification task for the **{{ dataset_name }}** dataset using Weak Supervision.  
+I have formulated labeling functions based on binary criteria (value — True/False).
+Each criterion corresponds to a specific class.
+Each criterion is then converted into a labeling function that predicts the class name if True, or ABSTAIN otherwise.  
+
+{% if domain_info %}
+### About the dataset
+{{ domain_info }}
+{% endif %}
+
+{# Task #}
+
+Your task is to extract new criteria that help determine the correct class of a text.
+Label of class for criteria generation: {{ label_name }}. You can find the class name by label in the "About the dataset" section.
+You are provided with the list of texts for criteria generation, list of texts already correctly classified by existing criteria (if these criteria exist), the list of texts with other labels and the list of existing criteria (if these criteria exist).
+You need to generate exact {{ number_of_criteria }} specific criteria for list of texts for criteria generation and, which distinguish all of these texts from texts from list of texts with other labels.
+Pay attention to list of texts already correctly classified by existing criteria (if these criteria exist). Generated criteria should be true not only for texts from list of texts for criteria generation, but also for texts from list of texts already correctly classified by existing criteria. But first of all, you should focus on texts from list of texts for criteria generation.
+The generated criteria must be different from the existing criteria.
+
+### List of texts for criteria generation
+
+{{ true_texts}}
+
+{% if correct_texts %}
+### List of texts already correctly classified by existing criteria
+
+{{ correct_texts}}
+{% endif %}
+
+### List of texts with other labels
+
+{{ false_texts}}
+
+{% if existing_criteria %}
+### Existing criteria
+
+{{ existing_criteria }}
+{% endif %}
+
+### Response Format
+
+List all new criteria in the response. For each, include:
+
+- `criterion`: a short name for the criterion  
+- `description`: a list of substrings separated by the "+" sign. Text is considered to belong to the class if it contains all the substrings in one text. Try not to use more than 2 short substrings (with length less than 10 characters, words can be stemmed) in one description and do not make descriptions too complex or too specific.
+- `class`: the class to which the criterion applies. It ALWAYS must be {{ label_name }}
+
+The description will be applied to the texts for classification using the python function below:
+
+def _substring_LF(x, description, label):
+    if "+" in description:
+        description = description.split("+")
+        return label if all([k in x.text.lower() for k in description]) else -1
+    else:
+        return label if description in x.text.lower() else -1
+
+This function splits the description at the "+" symbol and checks whether each element is present in the classified string.
+
+Respond in **JSON** format using the following json schema:
+
+```json
+{
+    "type": "object",
+    "properties": {
+        "criteria": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "criterion": {"type": "string"},
+                    "description": {"type": "string"},
+                    "class": {"type": "string"},
+                },
+                "required": ["criterion", "description", "class"],
+                "additionalProperties": False,
+            },
+        },
+    },
+    "required": ["criteria"],
+    "additionalProperties": False,
+}
+```

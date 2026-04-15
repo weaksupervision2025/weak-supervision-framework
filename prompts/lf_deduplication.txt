@@ -1,0 +1,30 @@
+# Task
+
+You will be given a dictionary of criteria and their descriptions.
+Remove duplicates — criteria that describe the same thing.
+In your response, I want to receive a list of criterion that includes only unique criteria from the original dictionary.
+If all criteria in the original dictionary are different, simply copy it into the response.
+
+# Dictionary of criteria
+
+{{ criteria }}
+
+# Response format
+
+Reply in JSON format with the following json schema:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "unique_criteria": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": ["unique_criteria"],
+  "additionalProperties": false
+}
+```

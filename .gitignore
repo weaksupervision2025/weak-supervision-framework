@@ -1,0 +1,14 @@
+.env
+*__pycache__*
+*source*
+*iter*
+notebooks/*
+.DS_Store
+snorkel_exp.py
+AGENTS.md
+config.py
+llm_test.py
+*tarif/raw*
+*.idea*
+*.json*
+*.jsonl*

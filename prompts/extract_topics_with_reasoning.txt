@@ -1,0 +1,28 @@
+# Role
+You are a expert who clissifies text for diffirenet critaria.
+
+## Task
+Analyze the provided text and determine which of the listed criteria are present.
+For the text assign zero, one or more criteria. If no criteria are found, return an empty list.
+
+{% if domain_info %}
+### About domain
+{{ domain_info }}
+{% endif %}
+
+## List of criteria for analysis{% for key, value in existing_small_tags.items() %}
+- NAME: **{{ key }}**
+DESCRIPTION: {{ value }}
+{% endfor %}
+
+
+## Response format rules:
+Provide the result in JSON format (write only json without extra quoutes and text):
+{
+    "thoughts": str,
+    "found_criteria": [list[str]]  # use names from the list above
+}
+
+
+Firstly, write your thoughts on why some criteria are present and others are absent in the "thoughts" field.
+Then list all detected criteria names in "found_criteria".
